@@ -1,0 +1,193 @@
+.container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 2rem;
+  padding: 1rem;
+
+  $main-bg: linear-gradient(to bottom, #11004f, #02000a);
+  $main-light-bg: linear-gradient(to bottom, #2c01c9, #02000a);
+  $main-b-radius: 1rem;
+  $main-transition: 300ms;
+
+  &-start {
+    color: white;
+    display: flex;
+    margin: 10rem 0;
+
+    &-button {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  &-main {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+    min-width: 100vw;
+    min-height: 100vh;
+    &-left {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 5rem;
+      width: 75%;
+
+      &-time {
+        border-radius: 50%;
+        height: max-content;
+
+        padding: 2rem;
+        color: white;
+        font-size: 4rem;
+        border: 5px solid white;
+        font-weight: 700;
+      }
+    }
+    &-question {
+      background: $main-bg;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      padding: 2rem;
+      border: 1px solid white;
+      border-radius: $main-b-radius;
+      color: white;
+      font-size: 1.9rem;
+      font-weight: 700;
+    }
+
+    &-answers {
+      color: white;
+      min-width: 25vw;
+      width: fit-content;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 5rem;
+
+      &-correct {
+        animation: correct 3s ease forwards;
+      }
+
+      &-wrong {
+        animation: wrong 3s ease forwards;
+      }
+
+      &-div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+        background: $main-bg;
+        border-radius: $main-b-radius;
+        transition: $main-transition;
+        border: 1px solid white;
+        transition: $main-transition;
+
+        &-selected {
+          animation: correct 3s ease forwards;
+        }
+
+        &:hover {
+          cursor: pointer;
+          background: #2a02b8;
+        }
+      }
+    }
+  }
+
+  &-progress {
+    width: 25%;
+    height: 100vh;
+    background-color: darkblue;
+    color: white;
+    padding: 10rem 0;
+    &-list {
+      display: flex;
+      flex-direction: column;
+      min-width: 100%;
+      min-height: 100%;
+
+      align-items: center;
+      justify-content: space-between;
+      list-style-type: none;
+      &-container {
+        display: flex;
+        align-items: center;
+        gap: 5rem;
+
+        &-active {
+          display: flex;
+          gap: 5rem;
+          background-color: green;
+        }
+      }
+
+      &-item {
+        color: red;
+        list-style-type: none;
+      }
+    }
+  }
+}
+
+// animations start //
+
+@keyframes correct {
+  0% {
+    background: red;
+  }
+
+  20% {
+    background: green;
+  }
+
+  40% {
+    background: red;
+  }
+
+  60% {
+    background: green;
+  }
+
+  80% {
+    background: red;
+  }
+
+  100% {
+    background: green;
+  }
+}
+
+@keyframes wrong {
+  0% {
+    background: green;
+  }
+
+  20% {
+    background: red;
+  }
+
+  40% {
+    background: green;
+  }
+
+  60% {
+    background: red;
+  }
+
+  80% {
+    background: green;
+  }
+
+  100% {
+    background: red;
+  }
+}
+
+// animations end //

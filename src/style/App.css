@@ -1,0 +1,158 @@
+.container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 2rem;
+  padding: 1rem;
+}
+.container-start {
+  color: white;
+  display: flex;
+  margin: 10rem 0;
+}
+.container-start-button:hover {
+  cursor: pointer;
+}
+.container-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 100vw;
+  min-height: 100vh;
+}
+.container-main-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 5rem;
+  width: 75%;
+}
+.container-main-left-time {
+  border-radius: 50%;
+  height: -moz-max-content;
+  height: max-content;
+  padding: 2rem;
+  color: white;
+  font-size: 4rem;
+  border: 5px solid white;
+  font-weight: 700;
+}
+.container-main-question {
+  background: linear-gradient(to bottom, #11004f, #02000a);
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 2rem;
+  border: 1px solid white;
+  border-radius: 1rem;
+  color: white;
+  font-size: 1.9rem;
+  font-weight: 700;
+}
+.container-main-answers {
+  color: white;
+  min-width: 25vw;
+  width: -moz-fit-content;
+  width: fit-content;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5rem;
+}
+.container-main-answers-correct {
+  animation: correct 3s ease forwards;
+}
+.container-main-answers-wrong {
+  animation: wrong 3s ease forwards;
+}
+.container-main-answers-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background: linear-gradient(to bottom, #11004f, #02000a);
+  border-radius: 1rem;
+  transition: 300ms;
+  border: 1px solid white;
+  transition: 300ms;
+}
+.container-main-answers-div-selected {
+  animation: correct 3s ease forwards;
+}
+.container-main-answers-div:hover {
+  cursor: pointer;
+  background: #2a02b8;
+}
+.container-progress {
+  width: 25%;
+  height: 100vh;
+  background-color: darkblue;
+  color: white;
+  padding: 10rem 0;
+}
+.container-progress-list {
+  display: flex;
+  flex-direction: column;
+  min-width: 100%;
+  min-height: 100%;
+  align-items: center;
+  justify-content: space-between;
+  list-style-type: none;
+}
+.container-progress-list-container {
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+}
+.container-progress-list-container-active {
+  display: flex;
+  gap: 5rem;
+  background-color: green;
+}
+.container-progress-list-item {
+  color: red;
+  list-style-type: none;
+}
+
+@keyframes correct {
+  0% {
+    background: red;
+  }
+  20% {
+    background: green;
+  }
+  40% {
+    background: red;
+  }
+  60% {
+    background: green;
+  }
+  80% {
+    background: red;
+  }
+  100% {
+    background: green;
+  }
+}
+@keyframes wrong {
+  0% {
+    background: green;
+  }
+  20% {
+    background: red;
+  }
+  40% {
+    background: green;
+  }
+  60% {
+    background: red;
+  }
+  80% {
+    background: green;
+  }
+  100% {
+    background: red;
+  }
+}/*# sourceMappingURL=App.css.map */
