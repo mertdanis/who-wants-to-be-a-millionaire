@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import "./style/App.css";
+import React, { Component } from 'react'
+import { Howl } from "howler"
 
 function App() {
   const [question, setQuestion] = useState(1);
 
   const [time, setTime] = useState(30);
   const [start, setStart] = useState(false);
-
+  const [result, setResult] = useState(false);
   const moneyData = [
     { id: 1, amount: "$ 100" },
     { id: 2, amount: "$ 200" },
@@ -119,6 +121,7 @@ function App() {
   ];
 
   useEffect(() => {
+
     let timeInterval = setInterval(() => {
       setTime(time - 1);
     }, 1000);
@@ -131,26 +134,85 @@ function App() {
       start ? "" : clearInterval(timeInterval);
     }
 
+    let outofTime = () => {
+      // setResult(true);
+      // setStart(false)
+
+      console.log('zaman bitti!')
+
+    }
+
     {
-      time === 0 ? (document.body.style.backgroundColor = "red") : "";
+      time === 0 ? (outofTime()) : "";
     }
 
     return () => clearInterval(timeInterval);
   });
 
-  const givenAnswer = (answer) => {
+  // sounds //
+
+  const correctSound = 'src/sounds/src_sounds_correct.mp3'
+  const wrongSound = 'src/sounds/src_sounds_wrong.mp3'
+  const startSound = 'src/sounds/src_sounds_play.mp3'
+  const waitSound = 'src/sounds/src_sounds_wait.mp3'
+
+  const callMySound = (src) => {
+
+    const sound = new Howl({
+      src,
+      html5: true,
+    })
+
+    sound.play();
+
+  }
+
+  useEffect(() => {
+    callMySound(startSound)
+  }, [question])
+
+  // sounds end //
+
+
+  const givenAnswer = (answer, val) => {
+
+
+
     let moneyAmount = document.querySelector(
       ".container-progress-list-container-active"
     );
 
     let earnedMoney = moneyAmount.lastChild.textContent;
 
-    if (answer === true) {
-      // setQuestion(question + 1);
 
-      setTime(30);
+
+
+
+    if (answer === true) {
+      val.classList.add('container-main-answers-correct')
+
+
+
+      setTimeout(() => {
+
+        setQuestion(question + 1)
+        setTime(30);
+        val.classList.remove('container-main-answers-correct')
+
+      }, 5000)
+
+
+      setTimeout(() => {
+        callMySound(correctSound)
+      }, 2500)
+
+
     } else {
       console.log(`${earnedMoney} kazandiniz!`);
+      setTimeout(() => {
+        callMySound(wrongSound)
+      }, 2500)
+      val.classList.add('container-main-answers-wrong')
     }
   };
 
@@ -173,21 +235,22 @@ function App() {
             <div className="container-main-answers">
               {questionData[question - 1].answers.map((answer) => {
                 return (
-                  <div>
+                  <div onClick={(e) => {
+                    e.target.classList.add('selected')
+
+                  }}>
                     <p
-                      onClick={(e) => {
-                        e.target.classList.add("selected");
-                      }}
+
                       className="container-main-answers-div"
+                      onClick={(e) => {
+                        let selectedOption = e.target;
+                        let playerAnswer = answer.correct;
+                        givenAnswer(playerAnswer, selectedOption);
+                      }}
                     >
-                      <p
-                        onClick={(e) => {
-                          let playerAnswer = answer.correct;
-                          givenAnswer(playerAnswer);
-                        }}
-                      >
-                        {answer.text}
-                      </p>
+
+                      {answer.text}
+
                     </p>
                   </div>
                 );
@@ -199,6 +262,7 @@ function App() {
 
           <div className="container-progress">
             <ul className="container-progress-list">
+
               {moneyData.map((money) => {
                 return (
                   <div
@@ -233,6 +297,7 @@ function App() {
           </button>
         </div>
       )}
+
     </div>
   );
 }

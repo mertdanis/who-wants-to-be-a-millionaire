@@ -23,6 +23,7 @@
       }
     }
   }
+
   &-main {
     display: flex;
 
@@ -30,6 +31,7 @@
     align-items: center;
     min-width: 100vw;
     min-height: 100vh;
+
     &-left {
       display: flex;
       justify-content: center;
@@ -49,6 +51,7 @@
         font-weight: 700;
       }
     }
+
     &-question {
       background: $main-bg;
       display: flex;
@@ -107,6 +110,7 @@
     background-color: darkblue;
     color: white;
     padding: 10rem 0;
+
     &-list {
       display: flex;
       flex-direction: column;
@@ -116,6 +120,7 @@
       align-items: center;
       justify-content: space-between;
       list-style-type: none;
+
       &-container {
         display: flex;
         align-items: center;
