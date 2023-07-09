@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import "./style/App.css";
+import React, { Component } from "react";
+import { Howl } from "howler";
 
 function App() {
   const [question, setQuestion] = useState(1);
-
+  const [end, setEnd] = useState(false);
+  const [nickname, setNickname] = useState("");
+  const [money, setMoney] = useState(0);
   const [time, setTime] = useState(30);
   const [start, setStart] = useState(false);
-
+  const [selected, setSelected] = useState(false);
   const moneyData = [
     { id: 1, amount: "$ 100" },
     { id: 2, amount: "$ 200" },
@@ -132,13 +136,50 @@ function App() {
     }
 
     {
-      time === 0 ? (document.body.style.backgroundColor = "red") : "";
+      selected ? clearInterval(timeInterval) : "";
+    }
+
+    let outofTime = () => {
+      setEnd(true);
+
+      console.log("zaman bitti!");
+    };
+
+    {
+      time === 0 ? outofTime() : "";
     }
 
     return () => clearInterval(timeInterval);
   });
 
-  const givenAnswer = (answer) => {
+  // sounds //
+
+  const correctSound = "src/sounds/src_sounds_correct.mp3";
+  const wrongSound = "src/sounds/src_sounds_wrong.mp3";
+  const startSound = "src/sounds/src_sounds_play.mp3";
+  const waitSound = "src/sounds/src_sounds_wait.mp3";
+
+  const callMySound = (src) => {
+    const sound = new Howl({
+      src,
+      html5: true,
+    });
+
+    sound.play();
+  };
+
+  useEffect(() => {
+    callMySound(startSound);
+    setSelected(false);
+  }, [question]);
+
+  // useEffect(() => {
+  //   callMySound(waitSound);
+  // }, [selected]);
+
+  // sounds end //
+
+  const givenAnswer = (answer, val) => {
     let moneyAmount = document.querySelector(
       ".container-progress-list-container-active"
     );
@@ -146,11 +187,23 @@ function App() {
     let earnedMoney = moneyAmount.lastChild.textContent;
 
     if (answer === true) {
-      // setQuestion(question + 1);
+      val.classList.add("container-main-answers-correct");
+      setMoney(earnedMoney);
+      setTimeout(() => {
+        setQuestion(question + 1);
+        setTime(30);
+        val.classList.remove("container-main-answers-correct");
+      }, 12000);
 
-      setTime(30);
+      setTimeout(() => {
+        callMySound(correctSound);
+      }, 9000);
     } else {
-      console.log(`${earnedMoney} kazandiniz!`);
+      setTimeout(() => {
+        callMySound(wrongSound);
+        setEnd(true);
+      }, 9000);
+      val.classList.add("container-main-answers-wrong");
     }
   };
 
@@ -173,26 +226,30 @@ function App() {
             <div className="container-main-answers">
               {questionData[question - 1].answers.map((answer) => {
                 return (
-                  <div>
+                  <div
+                    onClick={(e) => {
+                      e.target.classList.add("selected");
+                      setSelected(true);
+                    }}
+                  >
                     <p
-                      onClick={(e) => {
-                        e.target.classList.add("selected");
-                      }}
                       className="container-main-answers-div"
+                      onClick={(e) => {
+                        let selectedOption = e.target;
+                        let playerAnswer = answer.correct;
+                        givenAnswer(playerAnswer, selectedOption);
+                      }}
                     >
-                      <p
-                        onClick={(e) => {
-                          let playerAnswer = answer.correct;
-                          givenAnswer(playerAnswer);
-                        }}
-                      >
-                        {answer.text}
-                      </p>
+                      {/* {answer.text} */}
                     </p>
                   </div>
                 );
               })}
             </div>
+
+            {end && (
+              <div className="container-main-end">`you earn: ${money}`</div>
+            )}
 
             {/* benim isim burada */}
           </div>
@@ -223,14 +280,22 @@ function App() {
       ) : (
         <div className="container-start">
           <h2 className="container-start-title">
-            Hello! Who Wants to Be a Millionaire?
+            Hello! Welcome to, Who Wants to Be a Millionaire?
           </h2>
-          <button
-            onClick={() => setStart(true)}
-            className="container-start-button"
-          >
-            Start the game!
-          </button>
+          <div className="container-start-wrap">
+            <button
+              onClick={() => setStart(true)}
+              className="container-start-button"
+            >
+              Start the game!
+            </button>
+            <input
+              type="text"
+              placeholder="enter your nick name!"
+              className="container-start-input"
+              onChange={(e) => setNickname(e.target.value)}
+            />
+          </div>
         </div>
       )}
     </div>

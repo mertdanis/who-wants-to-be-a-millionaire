@@ -10,7 +10,21 @@
 .container-start {
   color: white;
   display: flex;
-  margin: 10rem 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+}
+.container-start-wrap {
+  display: flex;
+  gap: 1rem;
+}
+.container-start-input:focus {
+  border: none;
+  outline: none;
+}
+.container-start-button {
+  padding: 1rem;
 }
 .container-start-button:hover {
   cursor: pointer;
@@ -62,10 +76,10 @@
   gap: 5rem;
 }
 .container-main-answers-correct {
-  animation: correct 3s ease forwards;
+  animation: correct 10s ease forwards;
 }
 .container-main-answers-wrong {
-  animation: wrong 3s ease forwards;
+  animation: wrong 10s ease forwards;
 }
 .container-main-answers-div {
   display: flex;
@@ -77,9 +91,6 @@
   transition: 300ms;
   border: 1px solid white;
   transition: 300ms;
-}
-.container-main-answers-div-selected {
-  animation: correct 3s ease forwards;
 }
 .container-main-answers-div:hover {
   cursor: pointer;
